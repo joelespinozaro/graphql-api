@@ -1,22 +1,23 @@
 import { tasks } from "./sample";
 
 export const resolvers = {
-  Query: {
-    hello: () => {
-      return "Hello World with Graphql";
+    Query: {
+        hello: () => {
+            return "Hello World with Graphql";
+        },
+        greet(root, { name }, ctx) {
+            console.log(ctx);
+            return `Hola ${name}`;
+        },
+        tasks() {
+            return tasks;
+        },
     },
-    greet(root, { name }) {
-      return `Hola ${name}`;
+    Mutation: {
+        createTask(_, { input }) {
+            input._id = tasks.length;
+            tasks.push(input);
+            return input;
+        },
     },
-    tasks() {
-      return tasks;
-    },
-  },
-  Mutation: {
-    createTask(_, { input }) {
-      input._id = tasks.length;
-      tasks.push(input);
-      return input;
-    },
-  },
 };
